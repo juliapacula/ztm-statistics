@@ -1,6 +1,5 @@
 package database;
 
-import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.Accumulators;
 import com.mongodb.client.model.Aggregates;
@@ -13,25 +12,18 @@ import java.util.Collections;
 import java.util.stream.Collectors;
 
 public class BusStops extends Context {
-    private final MongoCollection<Document> collection;
-
     public BusStops() {
-        super();
-        collection = this.getDatabase().getCollection("stops");
-    }
-
-    public MongoCollection<Document> getCollection() {
-        return collection;
+        super("bus_stops");
     }
 
     public void addStops(BusStop[] stops) {
-        collection.insertMany(Arrays.stream(stops).map(BusStop::writeToDatabase).collect(Collectors.toList()));
+        getCollection().insertMany(Arrays.stream(stops).map(BusStop::writeToDatabase).collect(Collectors.toList()));
     }
 
     public MongoCursor<Document> getZones() {
         Bson group = Aggregates.group("$zone._id", Accumulators.first("name", "$zone.name"));
 
-        return collection.aggregate(Collections.singletonList(group)).iterator();
+        return getCollection().aggregate(Collections.singletonList(group)).iterator();
     }
 
     public void addZones() {

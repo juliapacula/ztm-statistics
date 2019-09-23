@@ -1,17 +1,19 @@
 package database;
 
 import com.mongodb.client.MongoCollection;
+import models.BusLine;
+import models.BusStop;
 import org.bson.Document;
 
-public class BusLines extends Context {
-    private final MongoCollection<Document> collection;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
+public class BusLines extends Context {
     public BusLines() {
-        super();
-        collection = this.getDatabase().getCollection("lines");
+        super("bus_lines");
     }
 
-    public MongoCollection getCollection() {
-        return collection;
+    public void addBusLines(BusLine[] busLines) {
+        getCollection().insertMany(Arrays.stream(busLines).map(BusLine::writeToDatabase).collect(Collectors.toList()));
     }
 }
