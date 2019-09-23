@@ -2,7 +2,7 @@ package models;
 
 import org.bson.Document;
 
-public class Agency extends DatabaseModel {
+public class Zone extends DatabaseModel {
     public int id;
     public String name;
 
