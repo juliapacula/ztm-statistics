@@ -1,6 +1,7 @@
 import api.BusLineApi;
 import api.BusStopsApi;
 import api.RouteApi;
+import api.StopApi;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import database.BusLines;
 import database.BusStops;
@@ -8,10 +9,13 @@ import database.Routes;
 import models.BusLine;
 import models.BusStop;
 import models.Route;
+import models.Stop;
+
+import java.util.Date;
 
 public class StartJob {
     public static void main(String[] args) {
-        loadRoutes();
+        loadStops();
     }
 
     public static void loadZones() {
@@ -47,6 +51,16 @@ public class StartJob {
         try {
             Route[] routes = routeApi.getRoutes();
             routesCollection.addRoutes(routes);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void loadStops() {
+        StopApi stopApi = new StopApi();
+        try {
+            Stop[] routes = stopApi.getStops(new Date(), 12);
+            System.out.println(routes.length);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }

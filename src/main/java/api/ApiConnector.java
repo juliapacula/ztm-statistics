@@ -15,7 +15,7 @@ abstract class ApiConnector {
     }
 
     public String getBaseUrl() {
-        return isOld() ? "https://ckan.multimediagdansk.pl" : "https://ckan2.multimediagdansk.pl";
+        return isOld() ? "https://ckan.multimediagdansk.pl" : "http://ckan2.multimediagdansk.pl";
     }
 
     public JSONObject get(String urlToGet) {
