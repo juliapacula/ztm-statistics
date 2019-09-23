@@ -5,22 +5,23 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.bson.Document;
 
+import java.util.Date;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class BusLine extends DatabaseModel {
-    //  line identificator
     @JsonProperty("routeId")
-    public int number;
-    //  opis linii najczęściej składający się z nazw przystanków krańcowych
+    public int id;
+    @JsonProperty("routeShortName")
+    public String number;
     @JsonProperty("routeLongName")
     public String name;
-    //  data aktywacji wersji topologii dot. linii
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @JsonProperty("activationDate")
-    public String createdAt;
+    public Date createdAt;
 
     @Override
     public Document writeToDatabase() {
-        return new Document("_id", number)
+        return new Document("_id", id)
                 .append("number", number)
                 .append("name", name)
                 .append("created_at", createdAt);

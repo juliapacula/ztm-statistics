@@ -10,11 +10,15 @@ import java.util.Scanner;
 abstract class ApiConnector {
     private boolean isOld = true;
 
-    String getBaseUrl() {
-        return isOld ? "https://ckan.multimediagdansk.pl" : "https://ckan2.multimediagdansk.pl";
+    public boolean isOld() {
+        return isOld;
     }
 
-    JSONObject get(String urlToGet) {
+    public String getBaseUrl() {
+        return isOld() ? "https://ckan.multimediagdansk.pl" : "https://ckan2.multimediagdansk.pl";
+    }
+
+    public JSONObject get(String urlToGet) {
         try {
             URL url = new URL(getBaseUrl() + urlToGet);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
